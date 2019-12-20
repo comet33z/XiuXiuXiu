@@ -47,6 +47,6 @@ public class FloatingTextManager : MonoSingleton<FloatingTextManager>
         GameObject prefab = GetPrefab(floatType);
         if (prefab == null)
             return;
-        GameObject.Instantiate(prefab);
+        GameObject go = GameObject.Instantiate(prefab);
     }
 }
