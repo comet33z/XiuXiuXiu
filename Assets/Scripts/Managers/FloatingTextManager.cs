@@ -7,6 +7,7 @@ public enum FloatingTextType
     FloatingTextType_Perfect,
     FloatingTextType_Good,
     FloatingTextType_Bad,
+    FloatingTextType_Miss,
 }
 
 public class FloatingTextManager : MonoSingleton<FloatingTextManager>
@@ -14,6 +15,7 @@ public class FloatingTextManager : MonoSingleton<FloatingTextManager>
     public GameObject PrefabPerfect;
     public GameObject PrefabGood;
     public GameObject PrefabBad;
+    public GameObject PrefabMiss;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,8 @@ public class FloatingTextManager : MonoSingleton<FloatingTextManager>
                 return PrefabGood;
             case FloatingTextType.FloatingTextType_Bad:
                 return PrefabBad;
+            case FloatingTextType.FloatingTextType_Miss:
+                return PrefabMiss;
 
         }
 
@@ -48,5 +52,16 @@ public class FloatingTextManager : MonoSingleton<FloatingTextManager>
         if (prefab == null)
             return;
         GameObject go = GameObject.Instantiate(prefab);
+
+        Vector3 ScreenPos = Camera.main.WorldToScreenPoint(pos);
+        Vector2 uiPos = new Vector2();
+        RectTransform rtf = go.transform as RectTransform;
+        RectTransform parentRtf = UIRoot.Instance.transform as RectTransform;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRtf, ScreenPos,null, out uiPos);
+       
+        rtf.anchoredPosition = new Vector2(uiPos.x, uiPos.y + 65f);
+
+      
+        rtf.SetParent(UIRoot.Instance.transform, false);
     }
 }

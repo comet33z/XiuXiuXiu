@@ -16,16 +16,21 @@ public class DarkCloud : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Sword"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Sword"))
         {
             Debug.Log("GameOver");
             SwordAutoController sac = GameObject.FindObjectOfType<SwordAutoController>();
-            if(sac)
+            if (sac)
             {
                 sac.CurrentStatus = SwordStatus.SwordStatus_GameOver;
             }
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 }

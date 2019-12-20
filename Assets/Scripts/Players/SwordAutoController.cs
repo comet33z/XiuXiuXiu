@@ -69,6 +69,8 @@ public class SwordAutoController : MonoBehaviour
                 CurrentStatus = SwordStatus.SwordStatus_Up;
                 
             }
+
+            GameMgr.Instance.AddCurrentSwordCount();
             StartUpLength = dis;//transform.localScale.y;
 
             //Debug.Log("StartUpLength " + dis);

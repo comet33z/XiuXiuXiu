@@ -87,6 +87,17 @@ public class BirdBase : MonoBehaviour
         
     }
 
+    virtual protected void NewFloatingText()
+    {
+        FloatingTextManager.Instance.NewFloatingText(GameMgr.Instance.GetFloatType(), this.transform.position);
+    }
+
+    protected void NewFloatingMissText()
+    {
+        FloatingTextManager.Instance.NewFloatingText(FloatingTextType.FloatingTextType_Miss, this.transform.position);
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Sword"))
@@ -94,6 +105,9 @@ public class BirdBase : MonoBehaviour
             if (this.CurrentStatus == BirdStatus.BirdStatus_Normal)
             {
                 FlyToHotPot();
+               
+                NewFloatingText();
+                GameMgr.Instance.ClearSwordCount();
             }
         }
         else if(collision.gameObject.layer == LayerMask.NameToLayer("SwordInvalid"))
@@ -102,6 +116,8 @@ public class BirdBase : MonoBehaviour
             if(this.CurrentStatus == BirdStatus.BirdStatus_Normal)
             {
                 FlyAway();
+                NewFloatingMissText();
+                GameMgr.Instance.ClearSwordCount();
             }
             
         }
