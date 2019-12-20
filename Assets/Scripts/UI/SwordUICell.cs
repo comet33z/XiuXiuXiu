@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMgr : MonoSingleton<GameMgr>
+public class SwordUICell : MonoBehaviour
 {
-    [Header("LevelSettings")]
-    public int SwordCnt;
-    public int PerfectSwordCnt;
-    public int StandardSwordCnt;
-
     // Start is called before the first frame update
     void Start()
     {

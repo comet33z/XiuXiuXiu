@@ -1,14 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameMgr : MonoSingleton<GameMgr>
+public class UIRoot : MonoSingleton<UIRoot>
 {
-    [Header("LevelSettings")]
-    public int SwordCnt;
-    public int PerfectSwordCnt;
-    public int StandardSwordCnt;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +15,15 @@ public class GameMgr : MonoSingleton<GameMgr>
     void Update()
     {
         
+    }
+
+    public void ClickRestartBtn()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void ClickToSelectLevelBtn()
+    {
+
     }
 }

@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class GameMgr : MonoSingleton<GameMgr>
+[Serializable]
+
+public class LevelSetting : ScriptableObject
 {
-    [Header("LevelSettings")]
-    public int SwordCnt;
-    public int PerfectSwordCnt;
-    public int StandardSwordCnt;
-
     // Start is called before the first frame update
     void Start()
     {
