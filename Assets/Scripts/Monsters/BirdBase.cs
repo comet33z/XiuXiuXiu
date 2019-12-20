@@ -6,7 +6,8 @@ public enum BirdStatus
 {
     BirdStatus_Normal,
     BirdStatus_FlyAway,
-    BirdStatus_ToHotPot
+    BirdStatus_ToHotPot,
+    BirdStatus_Freeze,
 }
 
 public class BirdBase : MonoBehaviour
@@ -20,11 +21,13 @@ public class BirdBase : MonoBehaviour
     public float FlyHotPotAcc = 20f;
     public Transform HotPotTrans;
 
+
     public bool IsDead = false;
 
     public BirdStatus CurrentStatus;
     private float flyAwayAngle;
     private Animator animator;
+    private float CurrentFreezeTime = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +49,16 @@ public class BirdBase : MonoBehaviour
         {
             Vector3 move = Vector3.left * SpeedX * Time.deltaTime;
             this.transform.Translate(move);
+        }
+        else if(CurrentStatus == BirdStatus.BirdStatus_Freeze)
+        {
+            CurrentFreezeTime += Time.deltaTime;
+            SwordAutoController sac = GameObject.FindObjectOfType<SwordAutoController>();
+            if(CurrentFreezeTime >= sac.TotalFreezeTime)
+            {
+                CurrentStatus = BirdStatus.BirdStatus_Normal;
+                CurrentFreezeTime = 0;
+            }
         }
         else if(CurrentStatus == BirdStatus.BirdStatus_ToHotPot)
         {
@@ -118,7 +131,21 @@ public class BirdBase : MonoBehaviour
         if(sac)
         {
             sac.Freeze();
+            BirdBase[] birds = GameObject.FindObjectsOfType<BirdBase>();
+            foreach(var bird in birds)
+            {
+                if(bird && bird != this)
+                {
+                    bird.Freeze();
+                }
+            }
         }
         Die();
+    }
+
+    virtual public void Freeze()
+    {
+        CurrentStatus = BirdStatus.BirdStatus_Freeze;
+        CurrentFreezeTime = 0;
     }
 }
