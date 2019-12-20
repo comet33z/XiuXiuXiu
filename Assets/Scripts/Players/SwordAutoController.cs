@@ -10,6 +10,7 @@ public class SwordAutoController : MonoBehaviour
     public float UpSpeed;
     public float DownAccSpeed;
     public float DownSpeed;
+    public float TotalFreezeTime = 1f;
 
     public LineRenderer lineRender;
     public Transform SwordTopTrans;
@@ -17,6 +18,7 @@ public class SwordAutoController : MonoBehaviour
     public float TotalPushTime = 1f;
     private float StartDownLength;
     private float StartUpLength;
+    private float CurrentFreezeTime = 0f;
 
     private float pushTime = 0f;
     private float downTime = 0f;
@@ -36,35 +38,19 @@ public class SwordAutoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (IsPushed == false && Input.GetMouseButtonDown(0))
-        //{
-        //    IsPushed = true;
-        //    pushTime = 0f;
-        //    CurrentStatus = SwordStatus.SwordStatus_Up;
-        //    StartUpLength = transform.localScale.y;
-        //}
-
-        //if (IsPushed)
-        //{
-        //    pushTime += Time.deltaTime;
-        //}
-        //else
-        //{
-        //    if (CurrentStatus == SwordStatus.SwordStatus_Down)
-        //        downTime += Time.deltaTime;
-        //}
-
-        //if (IsPushed && Input.GetMouseButtonUp(0))
-        //{
-        //    IsPushed = false;
-        //    StartDownLength = transform.localScale.y;
-
-        //    downTime = 0;
-        //    CurrentStatus = SwordStatus.SwordStatus_Down;
-        //}
-
         if (CurrentStatus == SwordStatus.SwordStatus_GameOver)
             return;
+
+        if (CurrentStatus == SwordStatus.SwordStatus_Freeze)
+        {
+            CurrentFreezeTime += Time.deltaTime;
+            if (CurrentFreezeTime >= TotalFreezeTime)
+            {
+                CurrentStatus = SwordStatus.SwordStatus_Up;
+                CurrentFreezeTime = 0;
+            }
+            return;
+        }
 
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -145,5 +131,13 @@ public class SwordAutoController : MonoBehaviour
             lineRender.SetPosition(1, LineEndPosition);
             lineRender.sortingLayerName = "ForeGround";
         }
+    }
+
+    public void Freeze()
+    {
+        UpdateSword();
+        CurrentStatus = SwordStatus.SwordStatus_Freeze;
+        CurrentFreezeTime = 0;
+       
     }
 }

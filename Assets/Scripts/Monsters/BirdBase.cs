@@ -114,6 +114,11 @@ public class BirdBase : MonoBehaviour
   
         CurrentStatus = BirdStatus.BirdStatus_ToHotPot;
 
+        SwordAutoController sac = GameObject.FindObjectOfType<SwordAutoController>();
+        if(sac)
+        {
+            sac.Freeze();
+        }
         Die();
     }
 }

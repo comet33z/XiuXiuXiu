@@ -8,6 +8,7 @@ public enum SwordStatus
     SwordStatus_Up,
     SwordStatus_Down,
     SwordStatus_GameOver,
+    SwordStatus_Freeze,
 }
 
 public class SwordController : MonoBehaviour
@@ -98,5 +99,7 @@ public class SwordController : MonoBehaviour
         swordScale.y = l;
         transform.localScale = swordScale;
     }
+
+
 
 }
