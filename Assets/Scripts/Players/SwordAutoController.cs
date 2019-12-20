@@ -143,6 +143,7 @@ public class SwordAutoController : MonoBehaviour
             LineEndPosition = new Vector3(30, pos.y, pos.z);
             lineRender.SetPosition(0, LineStartPosition);
             lineRender.SetPosition(1, LineEndPosition);
+            lineRender.sortingLayerName = "ForeGround";
         }
     }
 }
