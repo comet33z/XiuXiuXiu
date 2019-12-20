@@ -63,6 +63,9 @@ public class SwordAutoController : MonoBehaviour
         //    CurrentStatus = SwordStatus.SwordStatus_Down;
         //}
 
+        if (CurrentStatus == SwordStatus.SwordStatus_GameOver)
+            return;
+
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
         DrawAimLine(pos);
@@ -70,14 +73,16 @@ public class SwordAutoController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-
-            Debug.Log("Input.mousePosition " + mousePos + " world click pos " + pos);
+            if (pos.y > transform.position.y + transform.localScale.y
+                || pos.y < transform.position.y)
+                return;
+            //Debug.Log("Input.mousePosition " + mousePos + " world click pos " + pos);
             float dis = Mathf.Abs(pos.y - transform.position.y) - 0.5f;
             pushTime = 0f;
             CurrentStatus = SwordStatus.SwordStatus_Up;
             StartUpLength = dis;//transform.localScale.y;
 
-            Debug.Log("StartUpLength " + dis);
+            //Debug.Log("StartUpLength " + dis);
         }
 
         UpdateSword();
@@ -100,6 +105,10 @@ public class SwordAutoController : MonoBehaviour
                 l = SwordLength;
             }
             UpdateSwordLength(l);
+        }
+        else if (CurrentStatus == SwordStatus.SwordStatus_GameOver)
+        {
+            return;
         }
         else
         {

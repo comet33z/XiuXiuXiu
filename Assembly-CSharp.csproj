@@ -65,6 +65,9 @@
     <Compile Include="Assets\Scripts\Managers\MonoSingleton.cs" />
     <Compile Include="Assets\Scripts\Managers\SpawnManger.cs" />
     <Compile Include="Assets\Scripts\Monsters\BirdBase.cs" />
+    <Compile Include="Assets\Scripts\Monsters\FlyShit.cs" />
+    <Compile Include="Assets\Scripts\Players\DarkCloud.cs" />
+    <Compile Include="Assets\Scripts\Players\HotPot.cs" />
     <Compile Include="Assets\Scripts\Players\Player.cs" />
     <Compile Include="Assets\Scripts\Players\SwordAutoController.cs" />
     <Compile Include="Assets\Scripts\Players\SwordController.cs" />

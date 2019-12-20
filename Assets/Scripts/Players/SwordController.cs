@@ -7,6 +7,7 @@ public enum SwordStatus
     SwordStatus_Normal,
     SwordStatus_Up,
     SwordStatus_Down,
+    SwordStatus_GameOver,
 }
 
 public class SwordController : MonoBehaviour
@@ -84,6 +85,7 @@ public class SwordController : MonoBehaviour
             }
             UpdateSwordLength(l);
         }
+
         else
         {
             UpdateSwordLength(SwordLength);

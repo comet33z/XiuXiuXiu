@@ -15,6 +15,8 @@ public class BirdBase : MonoBehaviour
     public float SpeedX;
     public float SpeedY;
     public float FlyAwayAngleSpeed = 5;
+    public float FlyHotPotSpeedY = 2f;
+    public float FlyHotPotTime = 0f;
     public Transform HotPotTrans;
 
     public bool IsDead = false;
@@ -42,8 +44,18 @@ public class BirdBase : MonoBehaviour
             Vector3 move = Vector3.left * SpeedX * Time.deltaTime;
             this.transform.Translate(move);
         }
+        else if(CurrentStatus == BirdStatus.BirdStatus_ToHotPot)
+        {
 
-        if(CurrentStatus == BirdStatus.BirdStatus_FlyAway)
+            float GritySpeed = -10f * (FlyHotPotTime);
+
+            //SpeedY -= 10  * Time.deltaTime;
+            Vector3 move = (SpeedY + GritySpeed) * Time.deltaTime * Vector3.up;
+            this.transform.position += move;
+
+            FlyHotPotTime += Time.deltaTime;
+        }
+        else if(CurrentStatus == BirdStatus.BirdStatus_FlyAway)
         {
             this.transform.Rotate(Vector3.forward, FlyAwayAngleSpeed);
    
@@ -63,19 +75,20 @@ public class BirdBase : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Sword"))
         {
-            if(this.CurrentStatus == BirdStatus.BirdStatus_Normal)
-                Destroy(this.gameObject);
+            if (this.CurrentStatus == BirdStatus.BirdStatus_Normal)
+            {
+                FlyToHotPot();
+            }
         }
         else if(collision.gameObject.layer == LayerMask.NameToLayer("SwordInvalid"))
         {
             Debug.Log("Invalid !!!!");
-            FlyAway();
+            if(this.CurrentStatus == BirdStatus.BirdStatus_Normal)
+            {
+                FlyAway();
+            }
+            
         }
-    }
-
-    private void OnTriggerEnter2D(Collision2D collision)
-    {
-        
     }
 
     virtual public void FlyAway()
@@ -87,6 +100,8 @@ public class BirdBase : MonoBehaviour
 
     virtual public void FlyToHotPot()
     {
-
+        SpeedY = FlyHotPotSpeedY;
+        FlyHotPotTime = 0;
+        CurrentStatus = BirdStatus.BirdStatus_ToHotPot;
     }
 }
