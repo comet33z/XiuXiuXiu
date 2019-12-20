@@ -126,6 +126,7 @@ MonoBehaviour:
   FlyAwayAngleSpeed: 3
   FlyHotPotSpeedY: 5
   FlyHotPotTime: 0
+  FlyHotPotAcc: 30
   HotPotTrans: {fileID: 0}
   IsDead: 0
   CurrentStatus: 0

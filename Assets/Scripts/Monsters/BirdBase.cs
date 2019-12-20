@@ -17,18 +17,21 @@ public class BirdBase : MonoBehaviour
     public float FlyAwayAngleSpeed = 5;
     public float FlyHotPotSpeedY = 2f;
     public float FlyHotPotTime = 0f;
+    public float FlyHotPotAcc = 20f;
     public Transform HotPotTrans;
 
     public bool IsDead = false;
 
     public BirdStatus CurrentStatus;
     private float flyAwayAngle;
-
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         CurrentStatus = BirdStatus.BirdStatus_Normal;
+        animator = this.GetComponent<Animator>();
+       
     }
 
     // Update is called once per frame
@@ -47,7 +50,7 @@ public class BirdBase : MonoBehaviour
         else if(CurrentStatus == BirdStatus.BirdStatus_ToHotPot)
         {
 
-            float GritySpeed = -10f * (FlyHotPotTime);
+            float GritySpeed = -FlyHotPotAcc * (FlyHotPotTime);
 
             //SpeedY -= 10  * Time.deltaTime;
             Vector3 move = (SpeedY + GritySpeed) * Time.deltaTime * Vector3.up;
@@ -91,6 +94,12 @@ public class BirdBase : MonoBehaviour
         }
     }
 
+    virtual public void Die()
+    {
+        if (animator)
+            animator.SetBool("IsDead", true);
+    }
+
     virtual public void FlyAway()
     {
         SpeedY = Random.Range(10, 12);
@@ -102,6 +111,9 @@ public class BirdBase : MonoBehaviour
     {
         SpeedY = FlyHotPotSpeedY;
         FlyHotPotTime = 0;
+  
         CurrentStatus = BirdStatus.BirdStatus_ToHotPot;
+
+        Die();
     }
 }
