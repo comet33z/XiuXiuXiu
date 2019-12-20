@@ -18,6 +18,16 @@ public class FlyShit : BirdBase
             Vector3 move = Vector3.left * SpeedX * Time.deltaTime;
             this.transform.Translate(move);
         }
+        else if (CurrentStatus == BirdStatus.BirdStatus_Freeze)
+        {
+            CurrentFreezeTime += Time.deltaTime;
+            SwordAutoController sac = GameObject.FindObjectOfType<SwordAutoController>();
+            if (CurrentFreezeTime >= sac.TotalFreezeTime)
+            {
+                CurrentStatus = BirdStatus.BirdStatus_Normal;
+                CurrentFreezeTime = 0;
+            }
+        }
         else if (CurrentStatus == BirdStatus.BirdStatus_ToHotPot)
         {
 

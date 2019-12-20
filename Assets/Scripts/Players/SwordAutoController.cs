@@ -49,13 +49,11 @@ public class SwordAutoController : MonoBehaviour
                 CurrentStatus = SwordStatus.SwordStatus_Up;
                 CurrentFreezeTime = 0;
             }
-            return;
         }
 
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
         Vector3 pos = Camera.main.ScreenToWorldPoint(mousePos);
         DrawAimLine(pos);
-
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -64,8 +62,13 @@ public class SwordAutoController : MonoBehaviour
                 return;
             //Debug.Log("Input.mousePosition " + mousePos + " world click pos " + pos);
             float dis = Mathf.Abs(pos.y - transform.position.y) - 0.5f;
+
             pushTime = 0f;
-            CurrentStatus = SwordStatus.SwordStatus_Up;
+            if (CurrentStatus != SwordStatus.SwordStatus_Freeze)
+            {
+                CurrentStatus = SwordStatus.SwordStatus_Up;
+                
+            }
             StartUpLength = dis;//transform.localScale.y;
 
             //Debug.Log("StartUpLength " + dis);
@@ -77,7 +80,13 @@ public class SwordAutoController : MonoBehaviour
     void UpdateSword()
     {
         pushTime += Time.deltaTime;
-        if (CurrentStatus == SwordStatus.SwordStatus_Up)
+        if (CurrentStatus == SwordStatus.SwordStatus_Up
+            )
+        {
+            float l = StartUpLength + pushTime * UpSpeed + pushTime * pushTime * UpAccSpeed / 2;
+            UpdateSwordLength(l);
+        }
+        else if (CurrentStatus == SwordStatus.SwordStatus_Freeze)
         {
             float l = StartUpLength + pushTime * UpSpeed + pushTime * pushTime * UpAccSpeed / 2;
             UpdateSwordLength(l);
@@ -135,9 +144,7 @@ public class SwordAutoController : MonoBehaviour
 
     public void Freeze()
     {
-        UpdateSword();
         CurrentStatus = SwordStatus.SwordStatus_Freeze;
         CurrentFreezeTime = 0;
-       
     }
 }

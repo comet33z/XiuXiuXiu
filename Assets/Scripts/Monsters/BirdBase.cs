@@ -27,7 +27,7 @@ public class BirdBase : MonoBehaviour
     public BirdStatus CurrentStatus;
     private float flyAwayAngle;
     private Animator animator;
-    private float CurrentFreezeTime = 0f;
+    protected float CurrentFreezeTime = 0f;
 
     // Start is called before the first frame update
     void Start()
