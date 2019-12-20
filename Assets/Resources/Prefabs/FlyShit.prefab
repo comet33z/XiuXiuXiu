@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b84c9ac151fcb748bd0cbc01a64bcfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedX: 6
+  SpeedX: 4
   SpeedY: 0
   FlyAwayAngleSpeed: 5
   FlyHotPotSpeedY: 0
